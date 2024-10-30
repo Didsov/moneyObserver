@@ -25,6 +25,7 @@ const AddTranferWindow = ({
   const [name, setName] = useState("");
   const [selectedCategory, setselectedCategory] = useState(lastCategory);
   const [trySubmit, setTrySubmit] = useState(false);
+  const [isInvalidDate, setIsInvalidDate] = useState(false)
 
   const handlerSelectCategory = (id) => {
     setselectedCategory(categoryList.filter((item) => item.id === id)[0]);
@@ -35,6 +36,19 @@ const AddTranferWindow = ({
       console.log("Save ", sum, new Date(date), name, selectedCategory);
       handleSave();
       handlerClose();
+    }
+  };
+  const handleDateChange = (e) => {
+    const inputValue = e.target.value;
+    try {
+      const newDate = new Date(inputValue);
+      if (isNaN(newDate)) {
+        throw new Error("Invalid Date");
+      }
+      setDate(newDate);
+      setIsInvalidDate(false); // сброс ошибки
+    } catch (error) {
+      setIsInvalidDate(true); // если дата неверная
     }
   };
   const handleSave = () => {
@@ -73,9 +87,8 @@ const AddTranferWindow = ({
           label={"Дата"}
           value={new Date(date.getTime() - date.getTimezoneOffset() * 60000).toISOString().slice(0, 16)}
           type={"datetime-local"}
-          onChange={(e) => {
-            setDate(e.target.value);
-          }}
+          onChange={handleDateChange}
+          isError = {isInvalidDate}
         />
       </div>
       <InputDropDown

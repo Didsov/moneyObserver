@@ -11,10 +11,8 @@ const Transfer = ({ data,category_data }) => {
   const GREEN = "#86efac";
   const RED = "#fca5a5";
   const TYPECOLOR = category_data.color;
-
-  const year = timeStamp.getFullYear();
-  const month = timeStamp.getMonth();
-  const date = timeStamp.getDate();
+  
+ 
   const hour = String(timeStamp.getHours()).padStart(2, "0");
   const minutes = String(timeStamp.getMinutes()).padStart(2, "0");
   const isMinus = data.count < 0;

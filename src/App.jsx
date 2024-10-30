@@ -58,7 +58,6 @@ function App() {
     const savedTranfers = window.localStorage.getItem("TRANSFERS"); // берем изначение из локала по ключу
     return savedTranfers !== null ? JSON.parse(savedTranfers) : LIST; // если значение не null присваиваем состоянию данные из локал, иначе стандартное значение
   });
-
   useEffect(() => {
     // Запись состояния в localStorage только если settings изменились
     window.localStorage.setItem("TRANSFERS", JSON.stringify(transferList));
