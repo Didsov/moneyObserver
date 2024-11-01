@@ -5,7 +5,7 @@ import { getYearMonthDay } from "../utils/utils";
 const TransferList = ({ List, Category, viewSelector }) => {
   let lastDate = "";
   return (
-    <ul className="w-full ">
+    <ul className="w-full max-h-dvh overflow-y-scroll">
       {List.filter((itemF) => {
         return(new Date(itemF.date) >= new Date(viewSelector.start))
       }).sort((a, b)=>new Date(b.date) - new Date(a.date)).map((item) => {
