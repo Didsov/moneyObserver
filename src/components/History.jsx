@@ -29,7 +29,7 @@ const History = ({ transferList, categoryList, setTransferList }) => {
 
   return (
 
-    <div className="flex w-full flex-col p-2 " style={{height: 'calc(100vh - 88px)'}}>
+    <div className="flex w-full flex-col p-2  max-h-screen min-h-full" >
       <div className="flex px-4 py-2 my-2 border-b-4 gap-4">
         
         <DropDownSelect selected = {viewSelector} setSelected={setViewSelector} selectorList= {timeSelectList} />

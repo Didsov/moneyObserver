@@ -3,6 +3,8 @@ import AddTranferWindow from "./components/AddTranferWindow";
 import Button from "./components/Button";
 import History from "./components/History";
 import TransferList from "./components/TransferList";
+import Plots from "./components/Plots";
+import classNames from "classnames";
 // data = {
 //     date: ,
 //     name: ,
@@ -52,7 +54,6 @@ function App() {
     window.localStorage.setItem("CATEGORIES", JSON.stringify(categoryList));
   }, [categoryList]);
 
-
   const [transferList, setTransferList] = useState(() => {
     // Инициируем состояние сразу из local storage
     const savedTranfers = window.localStorage.getItem("TRANSFERS"); // берем изначение из локала по ключу
@@ -63,18 +64,47 @@ function App() {
     window.localStorage.setItem("TRANSFERS", JSON.stringify(transferList));
   }, [transferList]);
 
+  const [isShowGrafs, setIsShowGrafs] = useState(false);
   return (
-    <div className="w-screen h-screen">
-      <div className="w-[95%] gap-4 p-4 mx-auto mb-4 border-b-4 border-black flex items-center">
+    <div className="w-screen h-screen relative ">
+      <div className="w-[95%] gap-4 p-4 mx-auto mb-4 border-b-4 border-black flex items-center ">
         <p className=" font-bold text-xl block">Операции</p>
         <Button style={"ml-auto"}>Настройки</Button>
+
+        {isShowGrafs ? (
+          <Button
+            style={"md:hidden flex"}
+            onClick={() => setIsShowGrafs(false)}
+          >
+            История
+          </Button>
+        ) : (
+          <Button onClick={() => setIsShowGrafs(true)} style={"md:hidden flex"}>
+            Графики
+          </Button>
+        )}
       </div>
-      <div className="max-w-lg">
-        <History
-          transferList={transferList}
-          setTransferList={setTransferList}
-          categoryList={categoryList}
-        />
+      <div className="flex h-full  ">
+        <div
+          className={classNames("md:max-w-lg w-full md:block", {
+            hidden: isShowGrafs,
+            block: !isShowGrafs,
+          })}
+        >
+          <History
+            transferList={transferList}
+            categoryList={categoryList}
+            setTransferList={setTransferList}
+          />
+        </div>
+        <div
+          className={classNames("w-full h-full md:block", {
+            block: isShowGrafs,
+            hidden: !isShowGrafs,
+          })}
+        >
+          <Plots transferList={transferList} categoryList={categoryList} />
+        </div>
       </div>
     </div>
   );
